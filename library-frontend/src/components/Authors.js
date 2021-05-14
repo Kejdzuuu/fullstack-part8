@@ -2,7 +2,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_AUTHORS } from '../queries'
-
+import EditAuthorForm from '../components/EditAuthorForm'
 
 const Authors = (props) => {
   const queryResult = useQuery(ALL_AUTHORS)
@@ -40,7 +40,7 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-
+      <EditAuthorForm />
     </div>
   )
 }
