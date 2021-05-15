@@ -15,7 +15,7 @@ const Authors = (props) => {
     return <div>loading...</div>
   }
 
-  const authors = queryResult.data.allAuthors
+  const authors = queryResult.data ? queryResult.data.allAuthors : []
 
   return (
     <div>
@@ -40,7 +40,7 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-      <EditAuthorForm />
+      {authors.length ? <EditAuthorForm authors={authors} /> : null}
     </div>
   )
 }

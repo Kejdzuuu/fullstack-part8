@@ -13,7 +13,7 @@ const Books = (props) => {
     return <div>loading...</div>
   }
 
-  const books = queryResult.data.allBooks
+  const books = queryResult.data ? queryResult.data.allBooks : []
 
   return (
     <div>
