@@ -1,18 +1,27 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useQuery } from '@apollo/client'
+import { GET_USER } from './queries'
+import Recommendations from './components/Recommendations'
 
 const App = () => {
   const [page, setPage] = useState('authors')
-  const [token, setToken] = useState(null)
+  const [user, setUser] = useState(null)
   const client = useApolloClient()
+  const userQuery = useQuery(GET_USER)
+
+  useEffect(() => {
+    if (userQuery.data) {
+      setUser(userQuery.data.me)
+    }
+  }, [userQuery.data])
 
   const logoutHandler = () => {
-    setToken(null)
+    setUser(null)
     localStorage.clear()
     client.resetStore()
     setPage('authors')
@@ -23,9 +32,10 @@ const App = () => {
       <div>
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
-        {(token !== null)
+        {(user !== null)
           ? <span>
               <button onClick={() => setPage('add')}>add book</button>
+              <button onClick={() => setPage('recommend')}>recommendations</button>
               <button onClick={logoutHandler}>logout</button>
             </span>
           : <button onClick={() => setPage('login')}>login</button>
@@ -34,7 +44,7 @@ const App = () => {
 
       <Authors
         show={page === 'authors'}
-        token={token}
+        user={user}
       />
 
       <Books
@@ -47,8 +57,13 @@ const App = () => {
 
       <LoginForm
         show={page === 'login'}
-        token={token}
-        setToken={setToken}
+        user={user}
+        setUser={setUser}
+      />
+
+      <Recommendations
+        show={page === 'recommend'}
+        user={user}
       />
 
     </div>

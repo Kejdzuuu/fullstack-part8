@@ -16,7 +16,7 @@ const Authors = (props) => {
   }
 
   const authors = queryResult.data ? queryResult.data.allAuthors : []
-  const showEditAuthorForm = authors.length && props.token !== null
+  const showEditAuthorForm = authors.length && props.user !== null
 
   return (
     <div>
