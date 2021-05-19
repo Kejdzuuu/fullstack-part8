@@ -16,6 +16,7 @@ const Authors = (props) => {
   }
 
   const authors = queryResult.data ? queryResult.data.allAuthors : []
+  const showEditAuthorForm = authors.length && props.token !== null
 
   return (
     <div>
@@ -40,7 +41,7 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-      {authors.length ? <EditAuthorForm authors={authors} /> : null}
+      {showEditAuthorForm ? <EditAuthorForm authors={authors} /> : null}
     </div>
   )
 }
